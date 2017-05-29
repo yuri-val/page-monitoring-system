@@ -2,10 +2,10 @@ Rails.application.routes.draw do
   constraints subdomain: 'api' do
     scope module: 'api' do
       namespace :v1 do
-        resources :versions
-        resources :statuses
-        resources :articles
-        resources :sites
+        resources :versions, only: [:index, :show]
+        resources :statuses, only: [:index, :show]
+        resources :articles, only: [:index, :show]
+        resources :sites, only: [:index, :show]
       end
     end
   end
