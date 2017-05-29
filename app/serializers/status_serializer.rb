@@ -1,3 +1,3 @@
 class StatusSerializer < ActiveModel::Serializer
-  attributes :id
+  attributes :id, :name, :articles
 end

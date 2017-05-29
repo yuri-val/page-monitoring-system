@@ -1,3 +1,3 @@
 class VersionSerializer < ActiveModel::Serializer
-  attributes :id
+  attributes :id, :article, :vesrion, :html_text, :plain_text
 end
