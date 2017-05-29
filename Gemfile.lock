@@ -80,6 +80,8 @@ GEM
       mini_portile2 (~> 2.1.0)
     puma (3.8.2)
     rack (2.0.3)
+    rack-attack (5.0.1)
+      rack
     rack-cors (0.4.1)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -158,6 +160,7 @@ DEPENDENCIES
   factory_girl_rails
   listen (>= 3.0.5, < 3.2)
   puma (~> 3.7)
+  rack-attack
   rack-cors
   rails (~> 5.1.0)
   rspec-rails (>= 3.5.0)
