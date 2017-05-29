@@ -41,7 +41,7 @@ ActiveRecord::Schema.define(version: 20170529064216) do
 
   create_table "versions", force: :cascade do |t|
     t.integer "article_id"
-    t.integer "vertion"
+    t.integer "version"
     t.text "html_text"
     t.text "plain_text"
     t.datetime "created_at", null: false
