@@ -5,7 +5,7 @@ namespace :monitoring do
 
   desc "TODO"
   task all: :environment do
-  	DataMonitor.new(Site.first, false)
+  	monitor = DataMonitor.new(Site.first, false)
   end
 
 end
