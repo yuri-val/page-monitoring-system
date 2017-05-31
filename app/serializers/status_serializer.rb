@@ -1,3 +1,5 @@
 class StatusSerializer < ActiveModel::Serializer
-  attributes :id, :name, :articles
+  include SerializerHelpers
+  attributes :id, :name
+  attribute :articles do arry_to_h(object.articles, %w(id article_url)) end
 end
