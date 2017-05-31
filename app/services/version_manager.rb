@@ -1,31 +1,58 @@
 require 'open-uri'
+require 'open_uri_redirections'
 
 class VersionManager
-  attr_reader :article, :ct
+  attr_reader :article, :ct, :logger
 
   def initialize(art)
     @article = art
+    initialize_log
     set_version
+    close_log
   end
 
   private
+    #LOG
+    def initialize_log
+      @logger = ActiveSupport::Logger.new(Rails.root.join('log', 'version_manager.log').to_s)
+      @logger.info "Task started at #{Time.now}"
+    end
+
+    def close_log
+      @logger.info "Task finished at #{Time.now}"
+    end
+
+    def prepare_url(url)
+      unless url.start_with?('http')
+        prot = @article.site.site_url.split('://').first + '://'
+      end
+      prot + url
+    end
+
     def set_version
       v_data = {}
-      url = URI(@article.article_url)
+      url = URI(prepare_url(@article.article_url))
+      @logger.info "Article to scan:  #{url}"
       text = ""
       status = ""
-      open(url) do |f|
-        text = f.read
-        status = f.status.first
-      end
-      unless status = "200"
-        @article.deleted!
-        return
-      end
-      if @article.current_version.nil?
-        save_version(text)
-      else
-        compare_and_save_version(text)
+      begin
+        open(url, :allow_redirections => :all) do |f|
+          text = f.read
+          status = f.status.first
+        end
+        unless status == "200"
+          @article.deleted!
+          @logger.info "Article was deleted"
+          return
+        end
+        if @article.current_version.nil?
+          save_version(text)
+          @logger.info "First version saved"
+        else
+          compare_and_save_version(text)
+        end
+      rescue Exception => msg
+        @logger.error msg
       end
     end
 
@@ -35,29 +62,32 @@ class VersionManager
         html_text = text
       else
         page = Nokogiri::HTML(text)
-        html_text = page.css(ct).last
+        html_text = page.css(ct).last.to_html
       end
       unless @article.current_version.html_text == html_text
         save_version(text)
+        @logger.info "Version was changed"
       end
     end
 
     def save_version(text)
 
       page = Nokogiri::HTML(text)
-      html_text = page.css(ct).last
-      plain_text = Nokogiri::HTML(html_text).search(ct).xpath('text()')
+      doc = page.css(ct).last
+      html_text = doc.to_html
+      plain_text = doc.text
 
-      version = Version.new
-      version.article = @article
-      version.html_text = html_text
-      version.plain_text = plain_text
-      version.version = Time.now().strftime("%Y%m%d%H%M%S")
+      ver = Version.new
+      ver.article = @article
+      ver.version = Time.now().strftime("%Y%m%d%H%M%S").to_i
+      ver.html_text = html_text
+      ver.plain_text = plain_text
 
-      if version.save?
-        @article.current_version = version
-        @article.save
-      end
+      ver.save!
+
+      @article.current_version = ver
+      @article.save
+      @logger.info "New version: #{ver.version}"
 
     end
 

@@ -4,7 +4,7 @@ module Api::V1
 
     # GET /articles
     def index
-      @articles = Article.all
+      @articles = Article.by_params(params)
 
       render json: @articles
     end

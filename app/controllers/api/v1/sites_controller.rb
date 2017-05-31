@@ -5,7 +5,7 @@ module Api::V1
     # GET /sites
     def index
       @sites = Site.all
-
+      
       render json: @sites
     end
 

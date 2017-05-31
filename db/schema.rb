@@ -14,13 +14,14 @@ ActiveRecord::Schema.define(version: 20170529064216) do
 
   create_table "articles", force: :cascade do |t|
     t.integer "site_id"
+    t.integer "status_id"
     t.string "article_url"
-    t.string "status_id"
     t.integer "current_version_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["current_version_id"], name: "index_articles_on_current_version_id"
     t.index ["site_id"], name: "index_articles_on_site_id"
+    t.index ["status_id"], name: "index_articles_on_status_id"
   end
 
   create_table "sites", force: :cascade do |t|
@@ -41,7 +42,7 @@ ActiveRecord::Schema.define(version: 20170529064216) do
 
   create_table "versions", force: :cascade do |t|
     t.integer "article_id"
-    t.integer "version"
+    t.integer "version", limit: 8
     t.text "html_text"
     t.text "plain_text"
     t.datetime "created_at", null: false

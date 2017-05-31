@@ -1,4 +1,5 @@
 require 'open-uri'
+require 'open_uri_redirections'
 
 class DataMonitor
 	attr_reader :site, :only_fresh, :links, :logger
@@ -8,6 +9,7 @@ class DataMonitor
 		@only_fresh = fresh
 		initialize_log
 		set_article_links
+		scan_links
 		close_log
 	end
 
@@ -50,7 +52,7 @@ class DataMonitor
 
 		def get_links_from_url(url)
 			@logger.info "Page: #{url}"
-			text = open(url) { |f| page_string = f.read }
+			text = open(url, :allow_redirections => :all) { |f| page_string = f.read }
 			reg_exp = Regexp.new(@site.article_url_tmpl)
 			links = text.scan(reg_exp).uniq!
 			@logger.info "Links: #{links}"
@@ -67,22 +69,25 @@ class DataMonitor
 
 		def scan_link(link)
 			@logger.info "Link: #{link}"
-			art = nil
-			if article_save?(link, art)
-				write_version(art)
-			end
+			art = article_save(link)
+			write_version(art)
 		end
 
-		def article_save?(link, art)
+		def article_save(link)
+			v0 = Version.find_or_create_by(version: 0)
 			art = Article.find_or_create_by(article_url: link)
 			art.site = @site
 			art.article_url = link
 			art.status = Status.find_or_create_by(name: "Active")
-			art.save
+			if art.current_version.nil?
+				art.current_version = v0
+			end
+			art.save!
+			art
 		end
 
-		def write_version
-			
+		def write_version(art)
+			VersionManager.new(art)
 		end
 
 end

@@ -33,6 +33,12 @@ gem 'rack-attack'
 # Colorized outout
 gem 'colorize'
 
+# Open sites
+gem 'open_uri_redirections'
+
+# Diff between versions
+gem 'differ'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

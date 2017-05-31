@@ -1,11 +1,16 @@
 namespace :monitoring do
   desc "TODO"
   task fresh: :environment do
+    Site.each do |site|
+      DataMonitor.new(site, true)
+    end
   end
 
   desc "TODO"
   task all: :environment do
-  	monitor = DataMonitor.new(Site.first, false)
+    Site.all.each do |site|
+      DataMonitor.new(site, false)
+    end
   end
 
 end

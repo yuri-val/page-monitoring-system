@@ -18,7 +18,7 @@ namespace :sites do
     puts "2. Ok, next. Enter news link template.".green
     puts "If you leave it empty, app will scan whole links on page".yellow
     puts "You can use regexp.".yellow
-    puts ' e.g.: "4pda.ru\/\d*\/\d*\/\d*\/\d*\/"  (http://4pda.ru/2017/05/28/342727/)'.yellow 
+    puts ' e.g.: "4pda.ru\/\d*\/\d*\/\d*\/\d*\/"  (http://4pda.ru/2017/05/28/342727/)'.yellow
     print "> "
     data[:article_url_tmpl] = STDIN.gets.strip
     if data[:article_url_tmpl].empty?
@@ -34,7 +34,7 @@ namespace :sites do
     data[:article_content_tag] = STDIN.gets.strip
     if data[:article_content_tag].empty?
       data[:article_content_tag] = 'body'
-    end 
+    end
 
     puts "4. Ok, what about pagination?".green
     puts "Enter the page pagination template".yellow
@@ -78,7 +78,7 @@ namespace :sites do
       when /\d/
         puts 'editing...'
       end
-          
+
     end
   end
 
@@ -88,6 +88,15 @@ namespace :sites do
 
   desc "TODO"
   task delete: :environment do
+  end
+
+  desc "Load site example to DB"
+  task example: :environment do
+    Site.create(site_url: 'http://4pda.ru/news/',
+                article_url_tmpl: '4pda.ru\/\d*\/\d*\/\d*\/\d*\/',
+                article_content_tag: 'div.content',
+                paginator_url_tmpl: 'http://4pda.ru/page/%_ind_%/',
+                pages_to_scan: 5)
   end
 
 end
