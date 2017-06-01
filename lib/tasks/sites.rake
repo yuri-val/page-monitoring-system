@@ -31,6 +31,7 @@ namespace :sites do
     puts "If you leave it blank, the whole page will be scanned (body tag)".yellow
     puts "You can use css style".yellow
     puts ' e.g.: "div.content"  (<div class="content"> ... </div>)'.yellow
+    print "> "
     data[:article_content_tag] = STDIN.gets.strip
     if data[:article_content_tag].empty?
       data[:article_content_tag] = 'body'
@@ -56,17 +57,25 @@ namespace :sites do
     Site.create(data)
   end
 
-  desc "Show site property"
-  task show: :environment do
+  desc "Manage sites property"
+  task manage: :environment do
     limit = 10
     offset = 0
     while true do
-      puts "PAGE #{(offset % 10) + 1}"
       sites = Site.limit(limit).offset(offset)
-      sites.each_with_index do |val, ind|
-        puts "#{ind}. #{val.site_url}".green
+      if sites.any?
+        puts "PAGE #{(offset / 10) + 1}"
+        puts "#. Site url".green
+        puts "------------------".green
+        sites.each do |val|
+          puts "#{val.id}. #{val.site_url}".green
+        end
+        puts "n - next page, q - exit, e{#} - edit, d{#} - delete"
+      else
+        puts "Nothing to show. Make your choise
+              q - exit, e{#} - edit, d{#} - delete"
       end
-      puts "n - next page, q - exit, # - edit"
+      print "> "
       ans = STDIN.gets.strip.downcase
       case ans
       when 'n'
@@ -75,19 +84,50 @@ namespace :sites do
         next
       when 'q'
         exit 0
-      when /\d/
-        puts 'editing...'
+      when /e\d*/
+        id = ans.delete("ed").to_i
+        site = Site.find(id)
+        raise "Can't find site with id #{id}" if site.nil?
+        flds = %w(site_url article_url_tmpl article_content_tag paginator_url_tmpl pages_to_scan)
+        flds.each do |fld|
+          puts "#{fld.ljust(20)} = \"#{site[fld.to_sym]}\""
+        end
+        while true do
+          puts "Enter field name you want to edit"
+          print "> "
+          fld_name = STDIN.gets.strip.downcase
+          raise "Can't find field #{fld_name}" unless flds.include?(fld_name)
+          puts "Enter new value"
+          print "> "
+          val = STDIN.gets.strip.downcase
+          site[fld_name.to_sym] = val
+          puts "n - next field, s - save, c - cancle"
+          ans = STDIN.gets.strip.downcase
+          case ans
+          when 'n'
+            next
+          when 's'
+            site.save!
+            puts "Saving... #{site.inspect}"
+            exit 0
+          when 'c'
+            puts 'Canceled'
+            exit 0
+          end
+        end
+      when /d\d*/
+        id = ans.delete("ed").to_i
+        site = Site.find(id)
+        raise "Can't find site with id #{id}" if site.nil?
+        puts "Do you realy want to delete #{site.inspect}?"
+        puts "y - yes, n - no, c - cancle"
+        print "> "
+        ans = STDIN.gets.strip.downcase
+        site.destroy if ans == 'y'
+        exit 0
       end
 
     end
-  end
-
-  desc "TODO"
-  task edit: :environment do
-  end
-
-  desc "TODO"
-  task delete: :environment do
   end
 
   desc "Load site example to DB"

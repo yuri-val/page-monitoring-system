@@ -56,7 +56,12 @@ Also you have to change db parameters for MySQL and PG in `database.yml`.
 
 Go to root application url (`127.0.0.1:3000`) for more info about routes.
 
+## Site management
+
 If you want to add new site, just run `rake sites:add` and follow wizard.
+
+Also you can manage existing sites (show sites list, edit or delete). Use follow
+command: `rake sites:manage`
 
 ## Routing
 
