@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  root to: 'routes#index'
   scope module: 'api' do
     namespace :v1 do
       get 'articles/changed', to: 'articles#changed'
