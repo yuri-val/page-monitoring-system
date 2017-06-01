@@ -170,6 +170,7 @@ DEPENDENCIES
   active_model_serializers
   byebug
   colorize
+  diff-lcs
   differ
   factory_girl_rails
   listen (>= 3.0.5, < 3.2)

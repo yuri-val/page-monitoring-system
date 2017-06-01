@@ -8,18 +8,22 @@ class DifferTool
     @current  = Version.find(c_v)
     @original = Version.find(o_v)
     @text     = (options[:text]    || :plain_text).to_sym
-    @fmt      = (options[:format]  || :html).to_sym
+    @fmt      = (options[:format]  || :array).to_sym
     @diff_by  = (options[:diff_by] || :word).to_sym
     set_diff
   end
 
   private
     def set_diff
-      Differ.format = @fmt
       @diff = begin
                 @error = false
                 raise if @current.nil? or @original.nil?
-                Differ.send("diff_by_#{diff_by}", @current[@text], @original[@text]).to_s.html_safe
+                if @fmt == :array
+                  Diff::LCS.diff(@current[@text].split(" "), @original[@text].split(" "))
+                else
+                  Differ.format = @fmt
+                  Differ.send("diff_by_#{diff_by}", @current[@text], @original[@text]).to_s.html_safe
+                end
               rescue Exception => msg
                 @error = true
                 msg.to_s + "

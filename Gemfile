@@ -40,6 +40,7 @@ gem 'open_uri_redirections'
 
 # Diff between versions
 gem 'differ'
+gem 'diff-lcs'
 
 #group :production do
   gem 'whenever', :require => false

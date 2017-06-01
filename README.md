@@ -73,7 +73,7 @@ If you want to add new site, just run `rake sites:add` and follow wizard.
         [url]?par1=val1[&par2=val2]
         Parameter: {Value1|Value2}
          text: {plain_text|html_text} default:plain_text
-         format: {ascii|color|html} default:html
+         format: {ascii|color|html|array} default:array
          diff_by: {line|word|char} default:word
          type: {html|json} default:json"
 

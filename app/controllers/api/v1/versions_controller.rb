@@ -43,7 +43,7 @@ module Api::V1
         type = (params[:type] || :json).to_sym
         diff = DifferTool.new(id, o_id, params)
         data = if type == :html
-                {type => diff.diff}
+                {type => diff.diff.to_s}
               elsif type == :json
                 {type => {'diff_text': diff.diff, 'error': diff.error}}
               else
