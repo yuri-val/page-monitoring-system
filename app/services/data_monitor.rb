@@ -33,6 +33,7 @@ class DataMonitor
 								else
 									get_all_articles
 								end
+			@links = @links || []
 		end
 
 		def get_fresh_articles
@@ -54,7 +55,7 @@ class DataMonitor
 			@logger.info "Page: #{url}"
 			text = open(url, :allow_redirections => :all) { |f| page_string = f.read }
 			reg_exp = Regexp.new(@site.article_url_tmpl)
-			links = text.scan(reg_exp).uniq!
+			links = text.scan(reg_exp).uniq
 			@logger.info "Links: #{links}"
 			links
 

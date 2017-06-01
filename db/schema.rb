@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170529064216) do
+ActiveRecord::Schema.define(version: 20170601100206) do
 
   create_table "articles", force: :cascade do |t|
     t.integer "site_id"
@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(version: 20170529064216) do
     t.integer "pages_to_scan"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "active", default: true
   end
 
   create_table "statuses", force: :cascade do |t|

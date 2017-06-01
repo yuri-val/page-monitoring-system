@@ -23,10 +23,11 @@ class VersionManager
     end
 
     def prepare_url(url)
-      unless url.start_with?('http')
-        prot = @article.site.site_url.split('://').first + '://'
-      end
-      prot + url
+      prot = ""
+      dom = ""
+      prot = @article.site.site_url.split('://').first + '://' unless url.start_with?('http')
+      dom  = @article.site.site_url.split('/')[2] if  url.start_with?('/')
+      prot + dom + url
     end
 
     def set_version

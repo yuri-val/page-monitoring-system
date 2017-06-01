@@ -97,6 +97,11 @@ namespace :sites do
                 article_content_tag: 'div.content',
                 paginator_url_tmpl: 'http://4pda.ru/page/%_ind_%/',
                 pages_to_scan: 5)
+    Site.create(site_url: 'http://brovary-rada.gov.ua/documents/',
+                article_url_tmpl: '\/documents\/\d*\.html',
+                article_content_tag: 'div.bg1-content.col-md-8.col-sm-8',
+                paginator_url_tmpl: 'http://brovary-rada.gov.ua/documents/?start=%_ind_%0',
+                pages_to_scan: 5)
   end
 
 end
