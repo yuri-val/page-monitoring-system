@@ -2,7 +2,7 @@ class Article < ApplicationRecord
   belongs_to :site
   belongs_to :status
   belongs_to :current_version, class_name: 'Version'
-  has_many :versions
+  has_many :versions, dependent: :destroy
 
   validates :current_version, presence: true, allow_nil: true
 
