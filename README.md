@@ -31,7 +31,7 @@
 ## How to run
 
 ### Run with docker:
-    
+
 
     docker-compose build
     docker-compose run web rake db:drop db:create db:migrate
@@ -45,7 +45,7 @@ or `database.yml.sqlite_example` to `database.yml`.
 Also you have to change db parameters for MySQL and PG in `database.yml`.
 
 ### Direct run (ruby >= 2.3.x):
-    
+
 
     bundle install
     rake db:drop db:create db:migrate
@@ -68,7 +68,7 @@ If you want to add new site, just run `rake sites:add` and follow wizard.
   - `/v1/articles/changed` -- list of all changed articles (versions count > 1)
   - `/v1/versions/:id/:type` -- get full text of article version `type={html_text|plain_text}`
   - `/v1/versions/:id/diff/:another_id` -- get diff of two versions: `id` - current version id, `another_id` - original version id
-        
+
         also you can add parameters for this `url`
         [url]?par1=val1[&par2=val2]
         Parameter: {Value1|Value2}
@@ -85,7 +85,7 @@ If you want to add new site, just run `rake sites:add` and follow wizard.
 ### Nested routes:
   - `/v1/sites/:site_id/articles/{:id}` -- list of site articles
   - `/v1/articles/:article_id/versions/{:id}` -- list of article versions
-  - `/v1/statuses/:status_id/articles/{:id}` -- list of articles by status 
+  - `/v1/statuses/:status_id/articles/{:id}` -- list of articles by status
 
 ## Monitoring
 
@@ -96,7 +96,7 @@ You can manualy start monitoring of `active` sites.
 Just run:
   - `[docker-compose run web ]rake monitoring:all` - to scan all pages (set in site `pages_to_scan`)
   - `[docker-compose run web ]rake monitoring:fresh` - to scan only first(news) page (set in site `site_url`)
-  
+
 `[docker-compose run web ]` need if you start your app in `docker`
 ### Automatic
 
@@ -106,6 +106,7 @@ Schedule you can see/edit at `config/schedule.rb`
 
 ## Diff
 
-Вы можете простомтреть разницу версий файлов перейдя по `/v1/versions/:id/diff/:another_id`
-где в качестве **обязательных** параметров передаются `id` разных разных версий. Также, помимо `id` 
-можно задавать следующие **необязательные** параметры 
+You can simply watch the difference between the versions of the files by going to `/v1/versions/:id/diff/:another_id`
+Where as **required** parameters are passed `id` of different versions. Also, in addition to `id`
+You can specify the following **optional** parameters `text`,` format`, `diff_by` and `type`.
+Working with parameters and their meaning is described in the [Routes](#routes) section .
