@@ -23,11 +23,7 @@ module Api::V1
     end
 
     def diff
-      id   = params[:id]
-      o_id = params[:another_id]
-      if id && o_id
-        render html: DifferTool.new(id, o_id, params).diff
-      end
+      render content_by_type
     end
 
     private
@@ -39,6 +35,20 @@ module Api::V1
       # Only allow a trusted parameter "white list" through.
       def version_params
         params.require(:version).permit(:article_id, :html_text, :plain_text)
+      end
+
+      def content_by_type
+        id   = params[:id]
+        o_id = params[:another_id]
+        type = (params[:type] || :json).to_sym
+        diff = DifferTool.new(id, o_id, params)
+        data = if type == :html
+                {type => diff.diff}
+              elsif type == :json
+                {type => {'diff_text': diff.diff, 'error': diff.error}}
+              else
+                {json: {'diff_text': "unknown type #{type}", 'error': true}}
+              end
       end
   end
 end

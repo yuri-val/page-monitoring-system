@@ -1,16 +1,15 @@
 namespace :monitoring do
-  desc "TODO"
+  desc "Task scan only first pages for site"
   task fresh: :environment do
-    Site.each do |site|
+    Site.all.each do |site|
       DataMonitor.new(site, true)
     end
   end
 
-  desc "TODO"
+  desc "Task scan all pages (pages_to_scan) for site"
   task all: :environment do
     Site.all.each do |site|
       DataMonitor.new(site, false)
     end
   end
-
 end

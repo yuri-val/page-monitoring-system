@@ -15,6 +15,8 @@ class Article < ApplicationRecord
     where(cond)
   end
 
+  scope :changed, -> { joins(:versions).group('articles.id').having('SUM(1) > 1') }
+
   def deleted!
     status = Status.find_or_create_by(name: "Deleted")
     save

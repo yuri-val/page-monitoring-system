@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   scope module: 'api' do
     namespace :v1 do
+      get 'articles/changed', to: 'articles#changed'
+      get 'versions/:id/:type', to: 'versions#text'
+      get 'versions/:id/diff/:another_id', to: 'versions#diff'
+
       resources :sites, only: [:index, :show] do
         resources :articles, only: [:index, :show]
       end
@@ -11,8 +15,6 @@ Rails.application.routes.draw do
       resources :statuses, only: [:index, :show] do
         resources :articles, only: [:index, :show]
       end
-      get 'versions/:id/:type', to: 'versions#text'
-      get 'versions/:id/diff/:another_id', to: 'versions#diff'
     end
   end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

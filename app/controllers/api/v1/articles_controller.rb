@@ -5,7 +5,6 @@ module Api::V1
     # GET /articles
     def index
       @articles = Article.by_params(params)
-
       render json: @articles
     end
 
@@ -14,6 +13,10 @@ module Api::V1
       render json: @article
     end
 
+    def changed
+      @articles = Article.changed
+      render json: @articles
+    end
 
     private
       # Use callbacks to share common setup or constraints between actions.
