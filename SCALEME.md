@@ -4,13 +4,13 @@ Application can be deployed to any cloud platform and can be scaled automaticall
 
 E.g.
 
-1. Cache
-    - Use gateway /reverse proxy caches to cache HTTP responses at our website.
-    - Use memcache to cache results that i’d otherwise pull from our database.
+## Cache
+- Use gateway /reverse proxy caches to cache HTTP responses at our website.
+- Use memcache to cache results that i’d otherwise pull from our database.
     
-2. Tend database and job handlers
-
+## Tend database and job handlers
 Any ORM, including Rails’ ActiveRecord can generate SQL queries that cause database performance issues
+   
    - Looking at slow query log after each major integration to make sure i don’t have “missing” database indices, and i haven’t written inappropriate find-all’s in Rails code.
    - Scrub database periodically for indices that are no longer being used
    - Watch the resource consumption of background and scheduled jobs
