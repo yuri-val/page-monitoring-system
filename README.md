@@ -58,11 +58,12 @@ Go to root application url (`127.0.0.1:3000`) for more info about routes.
 
 ## Site management
 
-If you want to add new site, just run `rake sites:add` and follow wizard.
+If you want to add new site, just run `[docker-compose run web ]rake sites:add` and follow wizard.
 
 Also you can manage existing sites (show sites list, edit or delete). Use follow
-command: `rake sites:manage`
+command: `[docker-compose run web ]rake sites:manage`
 
+`[docker-compose run web ]` need if you start your app in `docker`
 ## Routing
 
 ### Routes:
@@ -102,7 +103,7 @@ Just run:
   - `[docker-compose run web ]rake monitoring:all` - to scan all pages (set in site `pages_to_scan`)
   - `[docker-compose run web ]rake monitoring:fresh` - to scan only first(news) page (set in site `site_url`)
 
-`[docker-compose run web ]` need if you start your app in `docker`
+
 ### Automatic
 
 Also this tasks can work automaticaly by gem `whenever`.
