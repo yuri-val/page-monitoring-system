@@ -20,9 +20,9 @@
 # Learn more: http://github.com/javan/whenever
 
 every 1.hour do
-  rake "monitoring:fresh"
+  rake 'monitoring:fresh'
 end
 
-every 1.day, at: "12pm" do
-  rake "monitoring:all"
+every 1.day, at: '12pm' do
+  rake 'monitoring:all'
 end

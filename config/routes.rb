@@ -6,15 +6,15 @@ Rails.application.routes.draw do
       get 'versions/:id/:type', to: 'versions#text'
       get 'versions/:id/diff/:another_id', to: 'versions#diff'
 
-      resources :sites, only: [:index, :show] do
-        resources :articles, only: [:index, :show]
+      resources :sites, only: %i[index show] do
+        resources :articles, only: %i[index show]
       end
-      resources :articles, only: [:index, :show] do
-        resources :versions, only: [:index, :show]
+      resources :articles, only: %i[index show] do
+        resources :versions, only: %i[index show]
       end
-      resources :versions, only: [:index, :show]
-      resources :statuses, only: [:index, :show] do
-        resources :articles, only: [:index, :show]
+      resources :versions, only: %i[index show]
+      resources :statuses, only: %i[index show] do
+        resources :articles, only: %i[index show]
       end
     end
   end

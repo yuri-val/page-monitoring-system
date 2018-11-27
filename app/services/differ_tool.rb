@@ -14,27 +14,29 @@ class DifferTool
   end
 
   private
-    def set_diff
-      @diff = begin
-                @error = false
-                raise if @current.nil? or @original.nil?
-                if @fmt == :array
-                  Diff::LCS.diff(@current[@text].split(" "), @original[@text].split(" "))
-                else
-                  Differ.format = @fmt
-                  Differ.send("diff_by_#{diff_by}", @current[@text], @original[@text]).to_s.html_safe
-                end
-              rescue Exception => msg
-                @error = true
-                msg.to_s + "
-                \n Check your vrsion id's
-                \n OR
-                \n Check your parametest: [url]?par1=val1[&par2=val2]
-                \n Parameter: {Value1|Value2}
-                \n text: {plain_text|html_text} default:plain_text
-                \n format: {ascii|color|html} default:html
-                \n diff_by: {line|word|char} default:word
-                \n type: {html|json} default:json"
+
+  def set_diff
+    @diff = begin
+              @error = false
+              raise if @current.nil? || @original.nil?
+
+              if @fmt == :array
+                Diff::LCS.diff(@current[@text].split(' '), @original[@text].split(' '))
+              else
+                Differ.format = @fmt
+                Differ.send("diff_by_#{diff_by}", @current[@text], @original[@text]).to_s.html_safe
               end
-    end
+            rescue Exception => msg
+              @error = true
+              msg.to_s + "
+              \n Check your vrsion id's
+              \n OR
+              \n Check your parametest: [url]?par1=val1[&par2=val2]
+              \n Parameter: {Value1|Value2}
+              \n text: {plain_text|html_text} default:plain_text
+              \n format: {ascii|color|html} default:html
+              \n diff_by: {line|word|char} default:word
+              \n type: {html|json} default:json"
+            end
+  end
 end

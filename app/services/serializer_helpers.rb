@@ -10,6 +10,7 @@ module SerializerHelpers
   def attrs(obj, fields)
     data = {}
     return data if obj.nil?
+
     fields.each do |fld|
       data[fld] = obj[fld.to_sym]
     end
