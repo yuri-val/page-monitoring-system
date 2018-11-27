@@ -10,45 +10,44 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170601100206) do
-
-  create_table "articles", force: :cascade do |t|
-    t.integer "site_id"
-    t.integer "status_id"
-    t.string "article_url"
-    t.integer "current_version_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["current_version_id"], name: "index_articles_on_current_version_id"
-    t.index ["site_id"], name: "index_articles_on_site_id"
-    t.index ["status_id"], name: "index_articles_on_status_id"
+ActiveRecord::Schema.define(version: 20_181_125_101_220) do
+  create_table 'articles', force: :cascade do |t|
+    t.integer 'site_id'
+    t.integer 'status_id'
+    t.string 'article_url'
+    t.integer 'current_version_id'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.string 'title'
+    t.index ['current_version_id'], name: 'index_articles_on_current_version_id'
+    t.index ['site_id'], name: 'index_articles_on_site_id'
+    t.index ['status_id'], name: 'index_articles_on_status_id'
   end
 
-  create_table "sites", force: :cascade do |t|
-    t.string "site_url"
-    t.string "article_url_tmpl"
-    t.string "article_content_tag"
-    t.string "paginator_url_tmpl"
-    t.integer "pages_to_scan"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.boolean "active", default: true
+  create_table 'sites', force: :cascade do |t|
+    t.string 'site_url'
+    t.string 'article_url_tmpl'
+    t.string 'article_content_tag'
+    t.string 'paginator_url_tmpl'
+    t.integer 'pages_to_scan'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.boolean 'active', default: true
   end
 
-  create_table "statuses", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table 'statuses', force: :cascade do |t|
+    t.string 'name'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
   end
 
-  create_table "versions", force: :cascade do |t|
-    t.integer "article_id"
-    t.integer "version", limit: 8
-    t.text "html_text"
-    t.text "plain_text"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["article_id"], name: "index_versions_on_article_id"
+  create_table 'versions', force: :cascade do |t|
+    t.integer 'article_id'
+    t.integer 'version', limit: 8
+    t.text 'html_text'
+    t.text 'plain_text'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['article_id'], name: 'index_versions_on_article_id'
   end
-
 end
