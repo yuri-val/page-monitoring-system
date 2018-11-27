@@ -19,37 +19,35 @@ require 'rails_helper'
 # that an instance is receiving a specific message.
 
 RSpec.describe Api::V1::StatusesController, type: :controller do
-
   # This should return the minimal set of attributes required to create a valid
   # Status. As you add validations to Status, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) {
-    {name: "Active"}
-  }
+  let(:valid_attributes) do
+    { name: 'Active' }
+  end
 
-  let(:invalid_attributes) {
-    {name: nil}
-  }
+  let(:invalid_attributes) do
+    { name: nil }
+  end
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # StatusesController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
-  describe "GET #index" do
-    it "assigns all statuses as @statuses" do
+  describe 'GET #index' do
+    it 'assigns all statuses as @statuses' do
       status = Status.create! valid_attributes
       get :index, params: {}, session: valid_session
       expect(assigns(:statuses)).to eq([status])
     end
   end
 
-  describe "GET #show" do
-    it "assigns the requested status as @status" do
+  describe 'GET #show' do
+    it 'assigns the requested status as @status' do
       status = Status.create! valid_attributes
-      get :show, params: {id: status.to_param}, session: valid_session
+      get :show, params: { id: status.to_param }, session: valid_session
       expect(assigns(:status)).to eq(status)
     end
   end
-
 end

@@ -19,50 +19,49 @@ require 'rails_helper'
 # that an instance is receiving a specific message.
 
 RSpec.describe Api::V1::ArticlesController, type: :controller do
-
   # This should return the minimal set of attributes required to create a valid
   # Article. As you add validations to Article, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) {
+  let(:valid_attributes) do
     site = Site.create(site_url: 'http://4pda.ru/news/',
-                        article_url_tmpl: '4pda.ru\/\d*\/\d*\/\d*\/\d*\/',
-                        article_content_tag: 'div.content',
-                        paginator_url_tmpl: 'http://4pda.ru/page/%_ind_%/',
-                        pages_to_scan: 5)
-    status = Status.create(name: "Active")
+                       article_url_tmpl: '4pda.ru\/\d*\/\d*\/\d*\/\d*\/',
+                       article_content_tag: 'div.content',
+                       paginator_url_tmpl: 'http://4pda.ru/page/%_ind_%/',
+                       pages_to_scan: 5)
+    status = Status.create(name: 'Active')
     {
       site: site,
       status: status,
-      article_url: "4pda.ru/2017/05/31/3709575/"
+      article_url: '4pda.ru/2017/05/31/3709575/'
     }
-  }
+  end
 
-  let(:invalid_attributes) {
+  let(:invalid_attributes) do
     {
       site_id: nil,
       status_id: nil,
-      article_url: "4pda.ru/2017/05/31/3709575/",
+      article_url: '4pda.ru/2017/05/31/3709575/',
       current_version_id: nil
     }
-  }
+  end
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # ArticlesController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
-  describe "GET #index" do
-    it "assigns all articles as @articles" do
+  describe 'GET #index' do
+    it 'assigns all articles as @articles' do
       article = Article.create! valid_attributes
       get :index, params: {}, session: valid_session
       expect(assigns(:articles)).to eq([article])
     end
   end
 
-  describe "GET #show" do
-    it "assigns the requested article as @article" do
+  describe 'GET #show' do
+    it 'assigns the requested article as @article' do
       article = Article.create! valid_attributes
-      get :show, params: {id: article.to_param}, session: valid_session
+      get :show, params: { id: article.to_param }, session: valid_session
       expect(assigns(:article)).to eq(article)
     end
   end

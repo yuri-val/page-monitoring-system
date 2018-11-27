@@ -19,45 +19,44 @@ require 'rails_helper'
 # that an instance is receiving a specific message.
 
 RSpec.describe Api::V1::VersionsController, type: :controller do
-
   # This should return the minimal set of attributes required to create a valid
   # Version. As you add validations to Version, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) {
+  let(:valid_attributes) do
     {
       article_id: 1,
       version: 0,
-      html_text: "1",
-      plain_text: "1"
+      html_text: '1',
+      plain_text: '1'
     }
-  }
+  end
 
-  let(:invalid_attributes) {
+  let(:invalid_attributes) do
     {
-      article_id: nil, 
+      article_id: nil,
       version: 0,
-      html_text: "1",
-      plain_text: "1"
+      html_text: '1',
+      plain_text: '1'
     }
-  }
+  end
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # VersionsController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
-  describe "GET #index" do
-    it "assigns all versions as @versions" do
+  describe 'GET #index' do
+    it 'assigns all versions as @versions' do
       version = Version.create! valid_attributes
       get :index, params: {}, session: valid_session
       expect(assigns(:versions)).to eq([version])
     end
   end
 
-  describe "GET #show" do
-    it "assigns the requested version as @version" do
+  describe 'GET #show' do
+    it 'assigns the requested version as @version' do
       version = Version.create! valid_attributes
-      get :show, params: {id: version.to_param}, session: valid_session
+      get :show, params: { id: version.to_param }, session: valid_session
       expect(assigns(:version)).to eq(version)
     end
   end
