@@ -18,7 +18,7 @@ export const compare = (id, anotherId) => (
     params: {
       format: 'html',
       type: 'html',
-      diff_by: 'word'
+      diff_by: 'char'
     }
   })
 )

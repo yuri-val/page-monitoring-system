@@ -17,4 +17,7 @@
 !/log/.keep
 !/tmp/.keep
 
+.idea/*
+client/build/*
+
 .byebug_history

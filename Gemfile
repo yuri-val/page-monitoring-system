@@ -24,6 +24,8 @@ gem 'puma'
 # gem 'capistrano-rails', group: :development
 
 gem 'active_model_serializers'
+gem 'will_paginate'
+gem 'api-pagination'
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'rack-cors'

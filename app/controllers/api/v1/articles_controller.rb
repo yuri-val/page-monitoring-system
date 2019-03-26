@@ -5,7 +5,7 @@ module Api::V1
     # GET /articles
     def index
       @articles = Article.by_params(params).order(updated_at: :desc)
-      render json: @articles
+      paginate json: @articles
     end
 
     # GET /articles/1

@@ -1,15 +1,18 @@
 <template>
-  <sui-button-group>
-    <sui-button basic secondary v-for="(cumb, index) in cumbs" :key="index" :active="cumbs.length === (index+1)">
+  <div>
+    <vs-button color="success" :type="cumbs.length === (index+1) ? 'relief' : 'gradient'" v-for="(cumb, index) in cumbs" :key="index">
       <router-link :to="cumb.to">{{cumb.title}}</router-link>
-    </sui-button>
-  </sui-button-group>
+    </vs-button>
+  </div>
 </template>
 
 <script>
 export default {
   name: "breadcrumbs",
-  props: ['cumbs']
+  props: ['cumbs'],
+  created() {
+    this.$emit('set-title', this.cumbs[this.cumbs.length - 1].title);
+  }
 }
 </script>
 
